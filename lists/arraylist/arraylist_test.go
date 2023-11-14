@@ -18,7 +18,7 @@ func TestList_New(t *testing.T) {
 	}
 
 	if actualValue, ok := list2.Get(0); actualValue != 1 || !ok {
-		t.Errorf("Got %v expected %v", actualValue, 1)
+		t.Errorf("Got %v expected %v ", actualValue, 1)
 	}
 
 	if actualValue, ok := list2.Get(1); actualValue != "b" || !ok {
