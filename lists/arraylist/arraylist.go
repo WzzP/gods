@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// 将结构和结构体绑定，指定改结构体要实现接口方法
+// 将接口和结构体绑定，指定结构体要实现接口方法
 var _ lists.List = (*List)(nil)
 
 const (
@@ -22,6 +22,7 @@ type List struct {
 
 func New(values ...any) *List {
 	list := &List{}
+	fmt.Printf("%v\n", values)
 	if len(values) > 0 {
 		list.Add(values...)
 	}
@@ -54,7 +55,7 @@ func (list *List) Remove(index int) {
 // Add 添加元素
 func (list *List) Add(values ...any) {
 	list.growBy(len(values))
-
+	fmt.Printf("%v\n", values)
 	for _, value := range values {
 		list.elements[list.size] = value
 		list.size++
@@ -179,9 +180,10 @@ func (list *List) resize(cap int) {
 
 // 判断slice是否需要扩容，扩容的大小为当前容量的两倍
 func (list *List) growBy(n int) {
+
 	currentCapacity := cap(list.elements)
 	if list.size+n >= currentCapacity {
-		newCapacity := int(growthFactor * float32(currentCapacity))
+		newCapacity := int(growthFactor * float32(currentCapacity+n))
 		list.resize(newCapacity)
 	}
 }
