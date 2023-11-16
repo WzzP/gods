@@ -1,6 +1,8 @@
 package arraylist
 
-import "testing"
+import (
+	"testing"
+)
 
 //arraylist 测试
 
@@ -32,6 +34,9 @@ func TestList_New(t *testing.T) {
 }
 
 func TestList_Add(t *testing.T) {
+	//list := New()
+
+	//expectedIndex := -1
 
 }
 

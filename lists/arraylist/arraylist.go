@@ -22,7 +22,6 @@ type List struct {
 
 func New(values ...any) *List {
 	list := &List{}
-	fmt.Printf("%v\n", values)
 	if len(values) > 0 {
 		list.Add(values...)
 	}
@@ -31,6 +30,7 @@ func New(values ...any) *List {
 
 // Get 获取元素
 func (list *List) Get(index int) (any, bool) {
+
 	if !list.withinRang(index) {
 		return nil, false
 	}
@@ -55,7 +55,6 @@ func (list *List) Remove(index int) {
 // Add 添加元素
 func (list *List) Add(values ...any) {
 	list.growBy(len(values))
-	fmt.Printf("%v\n", values)
 	for _, value := range values {
 		list.elements[list.size] = value
 		list.size++
@@ -154,7 +153,7 @@ func (list *List) String() string {
 
 // 判断是否越界
 func (list *List) withinRang(index int) bool {
-	return index > 0 && index < list.size
+	return index >= 0 && index < list.size
 }
 
 // 收缩slice，当数组长度小于slice 容量的25%时，进行收缩调整
@@ -186,4 +185,17 @@ func (list *List) growBy(n int) {
 		newCapacity := int(growthFactor * float32(currentCapacity+n))
 		list.resize(newCapacity)
 	}
+}
+
+// IndexOf 返回value所处的索引位置
+func (list *List) IndexOf(value any) int {
+	if list.size == 0 {
+		return 1
+	}
+	for index, element := range list.elements {
+		if element == value {
+			return index
+		}
+	}
+	return -1
 }
