@@ -10,7 +10,7 @@ type EnumerableWithIndex interface {
 	//All 将容器每个元素传递给函数,如果所有函数结果都返回true则返回true
 	All(func(index int, value any) bool) bool
 	//Find 查找跟value相匹配的值,遇到返回true的则返回该元素的索引和值
-	Find(func(index int, value any) bool) (int any)
+	Find(func(index int, value any) bool) (int, any)
 }
 
 type EnumerableWithKey interface {

@@ -3,13 +3,13 @@ package containers
 // IteratorWithIndex
 type IteratorWithIndex interface {
 	//Next 将迭代器移动到下一个元素,如果元素存在则返回true
-	Next()
+	Next() bool
 	//Value 返回当前的元素值
 	Value() any
 	//Index 返回当前的索引值
 	Index() int
 	//Begin 将迭代器重置为初始状态
-	Begin() int
+	Begin()
 	//First 将迭代器移动到第一个元素上,如果存在第一个元素则返回true
 	First() bool
 	//NextTo 将迭代器移动到满足函数条件的元素上,如果NextTo返回true 则可以使用Value()Index()来获取元素值和索引值

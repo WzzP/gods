@@ -1,6 +1,9 @@
 package lists
 
-import "gods/containers"
+import (
+	"gods/containers"
+	"gods/utils"
+)
 
 // List list的接口，所有list实现都基于此接口
 type List interface {
@@ -11,7 +14,7 @@ type List interface {
 	Swap(index1, index2 int)
 	Insert(index int, values ...any)
 	Set(index int, value any)
-
+	Sort(comparator utils.Comparator)
 	// Container 接口的组合
 	containers.Container
 }

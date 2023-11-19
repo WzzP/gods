@@ -3,6 +3,7 @@ package arraylist
 import (
 	"fmt"
 	"gods/lists"
+	"gods/utils"
 	"strings"
 )
 
@@ -20,7 +21,7 @@ type List struct {
 	size     int
 }
 
-func New(values ...any) *List {
+func New(values ...interface{}) *List {
 	list := &List{}
 	if len(values) > 0 {
 		list.Add(values...)
@@ -89,8 +90,9 @@ func (list *List) Swap(index1, index2 int) {
 func (list *List) Insert(index int, values ...any) {
 	if !list.withinRang(index) {
 		if index == list.size {
-			list.Add(values)
+			list.Add(values...)
 		}
+		return
 	}
 	l := len(values)
 	list.growBy(l)
@@ -138,7 +140,7 @@ func (list *List) Clear() {
 func (list *List) Values() []any {
 	newElements := make([]any, list.size)
 	copy(newElements, list.elements)
-	return list.elements
+	return newElements
 }
 
 func (list *List) String() string {
@@ -190,7 +192,7 @@ func (list *List) growBy(n int) {
 // IndexOf 返回value所处的索引位置
 func (list *List) IndexOf(value any) int {
 	if list.size == 0 {
-		return 1
+		return -1
 	}
 	for index, element := range list.elements {
 		if element == value {
@@ -198,4 +200,12 @@ func (list *List) IndexOf(value any) int {
 		}
 	}
 	return -1
+}
+
+func (list *List) Sort(comparator utils.Comparator) {
+	if list.size < 2 {
+		return
+	}
+	utils.Sort(list.elements[:list.size], comparator)
+
 }
