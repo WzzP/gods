@@ -92,28 +92,99 @@ func (list *List) Add(values ...any) {
 }
 
 func (list *List) Contains(values ...any) bool {
-	//TODO implement me
-	panic("implement me")
+	if len(values) == 0 {
+		return true
+	}
+	if list.size == 0 {
+		return false
+	}
+	for _, value := range values {
+		found := false
+		for element := list.first; element != nil; element = element.next {
+			if element.value == value {
+				found = true
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
 }
 
-func (list *List) Swap(index1, index2 int) {
-	//TODO implement me
-	panic("implement me")
+func (list *List) Swap(i, j int) {
+	if list.withinRang(i) && list.withinRang(j) && i != j {
+		var element1, element2 *element
+		for e, currentElement := 0, list.first; element1 == nil || element2 == nil; e, currentElement = e+1, currentElement.next {
+			switch e {
+			case i:
+				element1 = currentElement
+			case j:
+				element2 = currentElement
+			}
+		}
+		element1.value, element2.value = element2.value, element1.value
+	}
 }
 
 func (list *List) Insert(index int, values ...any) {
-	//TODO implement me
-	panic("implement me")
+	if len(values) == 0 {
+		return
+	}
+	if !list.withinRang(index) {
+		if index == list.size {
+			list.Add(values...)
+		}
+		return
+	}
+
+	list.size += len(values)
+	var beforeElement *element
+	foundElement := list.first
+	for e := 0; e != index; e, foundElement = e+1, foundElement.next {
+
+		beforeElement = foundElement
+	}
+	if foundElement == list.first {
+		oldNextElement := list.first
+		for i, value := range values {
+			newElement := &element{value: value}
+			if i == 0 {
+				list.first = newElement
+			} else {
+				beforeElement.next = newElement
+			}
+			beforeElement = newElement
+		}
+		beforeElement.next = oldNextElement
+	} else {
+		oldNextElement := beforeElement.next
+		for _, value := range values {
+			newElement := &element{value: value}
+			beforeElement.next = newElement
+			beforeElement = newElement
+		}
+		beforeElement.next = oldNextElement
+	}
+
 }
 
 func (list *List) Set(index int, value any) {
-	//TODO implement me
-	panic("implement me")
+	if !list.withinRang(index) {
+		if index == list.size {
+			list.Add(value)
+		}
+		return
+	}
+	element := list.first
+	for e := 0; e != index; e, element = e+1, element.next {
+
+	}
+	element.value = value
 }
 
 func (list *List) Sort(comparator utils.Comparator) {
-	//TODO implement me
-	panic("implement me")
+
 }
 
 func (list *List) Empty() bool {
